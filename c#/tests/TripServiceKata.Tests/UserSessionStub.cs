@@ -5,8 +5,8 @@ namespace TripServiceKata.Tests
 {
 	class UserSessionStub : IUserSession
 	{
-		internal User User { private get; set;  }
+		internal User LoggedUser { private get; set;  }
 
-		public User GetLoggedUser() => User;
+		public User GetLoggedUser() => LoggedUser;
 	}
 }
