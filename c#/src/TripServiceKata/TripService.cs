@@ -9,7 +9,7 @@ namespace TripServiceKata
 	public class TripService
 	{
 		private readonly Func<User, List<Trip>> findTripsByUser;
-		private readonly UserSession userSession;
+		private readonly IUserSession userSession;
 
 		public TripService()
 		{
@@ -17,7 +17,7 @@ namespace TripServiceKata
 			findTripsByUser = TripDAO.FindTripsByUser;
 		}
 
-		public TripService(UserSession userSession, Func<User, List<Trip>> findTripsByUser)
+		public TripService(IUserSession userSession, Func<User, List<Trip>> findTripsByUser)
 		{
 			this.userSession = userSession;
 			this.findTripsByUser = findTripsByUser;
