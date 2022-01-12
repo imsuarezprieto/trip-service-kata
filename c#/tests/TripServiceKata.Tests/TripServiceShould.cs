@@ -86,5 +86,22 @@ namespace TripServiceKata.Tests
 					.Should()
 					.Equal(new List<Trip>());
 		}
+
+		[Fact]
+		public void Get_no_trips_for_no_logged_user_with_friends_and_no_trips()
+		{
+			static List<Trip> NoTrips(User _) => new List<Trip>();
+			User         user        = new User();
+			User         loggedUser  = new User();
+			IUserSession userSession = new UserSessionStub { LoggedUser = loggedUser };
+			TripService  suo         = new TripService(userSession, NoTrips);
+			user.AddFriend(new User());
+
+			List<Trip> getSuoTrips = suo.GetTripsByUser(user);
+
+			getSuoTrips
+					.Should()
+					.Equal(new List<Trip>());
+		}
 	}
 }
