@@ -6,16 +6,16 @@ using TripServiceKata.Service;
 
 namespace TripServiceKata
 {
-    public class TripService
-    {
-	    private readonly UserSession getInstance;
-	    private readonly Func<User, List<Trip>> findTripsByUser;
+	public class TripService
+	{
+		private readonly Func<User, List<Trip>> findTripsByUser;
+		private readonly UserSession getInstance;
 
-	    public TripService()
-	    {
-		    getInstance = UserSession.GetInstance();
-		    findTripsByUser = TripDAO.FindTripsByUser;
-	    }
+		public TripService()
+		{
+			getInstance = UserSession.GetInstance();
+			findTripsByUser = TripDAO.FindTripsByUser;
+		}
 
 		public TripService(UserSession getInstance, Func<User, List<Trip>> findTripsByUser)
 		{
@@ -24,32 +24,25 @@ namespace TripServiceKata
 		}
 
 		public List<Trip> GetTripsByUser(User user)
-        {
-            List<Trip> tripList = new List<Trip>();
-            User loggedUser = getInstance.GetLoggedUser();
-            bool isFriend = false;
-            if (loggedUser != null)
-            {
-                foreach (User friend in user.GetFriends())
-                {
-                    if (friend.Equals(loggedUser))
-                    {
-                        isFriend = true;
-                        break;
-                    }
-                }
+		{
+			var tripList = new List<Trip>();
+			var loggedUser = getInstance.GetLoggedUser();
+			var isFriend = false;
+			if (loggedUser != null)
+			{
+				foreach (var friend in user.GetFriends())
+					if (friend.Equals(loggedUser))
+					{
+						isFriend = true;
+						break;
+					}
 
-                if (isFriend)
-                {
-                    tripList = findTripsByUser(user);
-                }
+				if (isFriend) tripList = findTripsByUser(user);
 
-                return tripList;
-            }
-            else
-            {
-                throw new UserNotLoggedInException();
-            }
-        }
-    }
+				return tripList;
+			}
+
+			throw new UserNotLoggedInException();
+		}
+	}
 }
