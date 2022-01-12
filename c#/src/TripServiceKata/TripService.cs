@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TripServiceKata.Entity;
 using TripServiceKata.Exception;
 using TripServiceKata.Service;
@@ -8,10 +9,12 @@ namespace TripServiceKata
     public class TripService
     {
 	    private readonly UserSession getInstance;
+	    private readonly Func<User, List<Trip>> findTripsByUser;
 
 	    public TripService()
 	    {
 		    getInstance = UserSession.GetInstance();
+		    findTripsByUser = TripDAO.FindTripsByUser;
 	    }
 
 	    public List<Trip> GetTripsByUser(User user)
@@ -32,7 +35,7 @@ namespace TripServiceKata
 
                 if (isFriend)
                 {
-                    tripList = TripDAO.FindTripsByUser(user);
+                    tripList = findTripsByUser(user);
                 }
 
                 return tripList;
