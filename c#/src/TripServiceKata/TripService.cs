@@ -9,24 +9,24 @@ namespace TripServiceKata
 	public class TripService
 	{
 		private readonly Func<User, List<Trip>> findTripsByUser;
-		private readonly UserSession getInstance;
+		private readonly UserSession userSession;
 
 		public TripService()
 		{
-			getInstance = UserSession.GetInstance();
+			userSession = UserSession.GetInstance();
 			findTripsByUser = TripDAO.FindTripsByUser;
 		}
 
-		public TripService(UserSession getInstance, Func<User, List<Trip>> findTripsByUser)
+		public TripService(UserSession userSession, Func<User, List<Trip>> findTripsByUser)
 		{
-			this.getInstance = getInstance;
+			this.userSession = userSession;
 			this.findTripsByUser = findTripsByUser;
 		}
 
 		public List<Trip> GetTripsByUser(User user)
 		{
 			var tripList = new List<Trip>();
-			var loggedUser = getInstance.GetLoggedUser();
+			var loggedUser = userSession.GetLoggedUser();
 			var isFriend = false;
 			if (loggedUser != null)
 			{
