@@ -68,3 +68,4 @@ xcuserdata
 *.xccheckout
 *.moved-aside
 *.xcuserstate
+/.vs/slnx.sqlite
