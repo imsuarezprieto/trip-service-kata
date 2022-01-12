@@ -25,24 +25,21 @@ namespace TripServiceKata
 
 		public List<Trip> GetTripsByUser(User user)
 		{
-			var tripList = new List<Trip>();
 			var loggedUser = userSession.GetLoggedUser();
-			var isFriend = false;
-			if (loggedUser != null)
-			{
-				foreach (var friend in user.GetFriends())
-					if (friend.Equals(loggedUser))
-					{
-						isFriend = true;
-						break;
-					}
+			if (loggedUser == null) throw new UserNotLoggedInException();
+			var tripList   = new List<Trip>();
+			var isFriend   = false;
+			foreach (var friend in user.GetFriends())
+				if (friend.Equals(loggedUser))
+				{
+					isFriend = true;
+					break;
+				}
 
-				if (isFriend) tripList = findTripsByUser(user);
+			if (isFriend) tripList = findTripsByUser(user);
 
-				return tripList;
-			}
+			return tripList;
 
-			throw new UserNotLoggedInException();
 		}
 	}
 }
