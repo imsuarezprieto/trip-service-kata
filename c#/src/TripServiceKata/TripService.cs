@@ -29,15 +29,12 @@ namespace TripServiceKata
 			if (loggedUser == null) throw new UserNotLoggedInException();
 			var tripList   = new List<Trip>();
 			var isFriend   = false;
-			foreach (var friend in user.GetFriends())
-				if (friend.Equals(loggedUser))
-				{
-					isFriend = true;
-					break;
-				}
-
+			user.GetFriends()
+					.ForEach(friend =>
+					{
+						if (friend.Equals(loggedUser)) isFriend = true;
+					});
 			if (isFriend) tripList = findTripsByUser(user);
-
 			return tripList;
 
 		}
