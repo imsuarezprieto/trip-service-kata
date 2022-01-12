@@ -69,3 +69,4 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 /.vs/slnx.sqlite
+/c#/.vs/TripServiceKata/v17/TestStore/0
