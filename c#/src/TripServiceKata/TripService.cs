@@ -17,7 +17,13 @@ namespace TripServiceKata
 		    findTripsByUser = TripDAO.FindTripsByUser;
 	    }
 
-	    public List<Trip> GetTripsByUser(User user)
+		public TripService(UserSession getInstance, Func<User, List<Trip>> findTripsByUser)
+		{
+			this.getInstance = getInstance;
+			this.findTripsByUser = findTripsByUser;
+		}
+
+		public List<Trip> GetTripsByUser(User user)
         {
             List<Trip> tripList = new List<Trip>();
             User loggedUser = getInstance.GetLoggedUser();
