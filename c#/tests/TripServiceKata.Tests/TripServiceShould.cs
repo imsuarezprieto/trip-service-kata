@@ -13,10 +13,10 @@ namespace TripServiceKata.Tests
 		[Fact]
 		public void Not_allow_not_logged_user()
 		{
-			var user = new User();
+			static List<Trip> NoTrips(User _) => new List<Trip>();
+			User         user        = new User();
 			IUserSession userSession = new UserSessionStub();
-			List<Trip> NoTrips(User _) => new List<Trip>();
-			var suo = new TripService(userSession, NoTrips);
+			TripService  suo         = new TripService(userSession, NoTrips);
 
 			Action getSuoTrips = () => suo.GetTripsByUser(user);
 
