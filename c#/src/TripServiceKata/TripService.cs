@@ -26,8 +26,7 @@ namespace TripServiceKata
 
 		public List<Trip> GetTripsByUser(User user)
 		{
-			if (userSession.GetLoggedUser() == null) 
-				throw new UserNotLoggedInException();
+			_ = userSession.GetLoggedUser() ?? throw new UserNotLoggedInException();
 			return 
 					user.GetFriends()
 							.Any(friend => 
